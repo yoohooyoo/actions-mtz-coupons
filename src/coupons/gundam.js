@@ -5,17 +5,23 @@ import { ECODE } from './const.js'
 
 function resolveRedMod(text, renderList) {
   try {
+    const prefixes = [
+      'gdc-fx-v2-netunion-red-envelope-',
+      'wm-coupon-usepage-red-envelopes-machpro-'
+    ]
     for (const instanceId of renderList) {
-      const data = matchMoudleData(
-        text,
-        `gdc-fx-v2-netunion-red-envelope-${instanceId}`,
-        ',directives'
-      )
+      for (const prefix of prefixes) {
+        const data = matchMoudleData(
+          text,
+          `${prefix}${instanceId}`,
+          ',directives'
+        )
 
-      if (data) {
-        data.instanceID = instanceId
+        if (data) {
+          data.instanceID = instanceId
 
-        return data
+          return data
+        }
       }
     }
   } catch {
